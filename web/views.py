@@ -70,7 +70,6 @@ def customer_logout(request):
 
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
-@role_required(['customer'])
 def home(request):
     print(request.user.email)
     instances = Product.objects.filter(is_deleted=False,status=True)
