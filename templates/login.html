@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="utf-8" />
+        <title>Login</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        <meta content="Premium Multipurpose Admin & Dashboard Template" name="description" />
+        <meta content="" name="author" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+
+        {% load static %}
+
+        <!-- App css -->
+        <link href="{% static 'admin_panel/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'admin_panel/assets/css/icons.min.css' %}" rel="stylesheet" type="text/css" />
+        <link href="{% static 'admin_panel/assets/css/app.min.css' %}" rel="stylesheet" type="text/css" />
+
+    </head>
+
+    <body class="account-body accountbg">
+
+        <!-- Log In page -->
+        <div class="container">
+            <div class="row vh-100 d-flex justify-content-center">
+                <div class="col-12 align-self-center">
+                    <div class="row">
+                        <div class="col-lg-5 mx-auto">
+                            <div class="card">
+
+                                <div class="form-group mb-0 row">
+                                    <div class="col-12">
+                                        <button class="btn btn-primary btn-block waves-effect waves-light" type="submit">
+                                            <a href="{% url 'social:begin' 'google-oauth2' %}">Login With Google </a>
+                                        </button>
+                                    </div><!--end col-->
+                                </div> <!--end form-group-->
+
+                        </div><!--end col-->
+                    </div><!--end row-->
+                </div><!--end col-->
+            </div><!--end row-->
+        </div><!--end container-->
+        <!-- End Log In page -->
+
+        
+        <!-- jQuery  -->
+        <script src="{% static 'admin_panel/assets/js/jquery.min.js' %}"></script>
+        <script src="{% static 'admin_panel/assets/js/bootstrap.bundle.min.js' %}"></script>
+        <script src="{% static 'admin_panel/assets/js/waves.js' %}"></script>
+        <script src="{% static 'admin_panel/assets/js/feather.min.js' %}"></script>
+        <script src="{% static 'admin_panel/assets/js/simplebar.min.js' %}"></script>
+
+
+    </body>
+
+</html>

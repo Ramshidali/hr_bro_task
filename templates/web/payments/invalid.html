@@ -1,0 +1,31 @@
+{% extends "ecommerce/web/base.html" %}
+{% load i18n %}
+{% load static %}
+{% block content %}
+    <div>
+        <div class="row wrapper border-bottom white-bg p-h-xs">
+            <div class="col-lg-12">
+                <div class="row">
+                    <div class="col-lg-5">
+                        <h3>Invalid Transaction</h3>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-12">
+            	<div class="ibox p-md">
+					<div class="m-b-none p-md">Invalid Transaction. Reason : {{invalid_reason}}.</div>
+				</div>
+            </div><!-- div.col-lg-12 -->
+
+        </div><!-- div.row -->
+    </div> <!-- div.wrapper -->
+{% endblock %}
+
+
+{% block static %}
+    {% load static %}
+{% endblock %}

@@ -1,0 +1,69 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% block content %}
+
+<section class="h-100 gradient-custom">
+    <div class="container py-5 h-100">
+      <div class="row d-flex justify-content-center align-items-center h-100">
+        <div class="col-lg-10 col-xl-8">
+          <div class="card" style="border-radius: 10px;">
+            <div class="card-header px-4 py-5">
+              <h5 class="text-muted mb-0">Thanks for your Order</h5>
+            </div>
+            <div class="card-body p-4">
+              <div class="d-flex justify-content-between align-items-center mb-4">
+                <p class="lead fw-normal mb-0" style="color: #a8729a;">Receipt</p>
+                <p class="small text-muted mb-0">Order ID : {{order.order_id}}</p>
+              </div>
+
+              {% for item in order_items %}
+
+              <div class="card shadow-0 border mb-4">
+                <div class="card-body">
+                  <div class="row">
+                    <div class="col-md-2">
+                      <img src="{{item.product.image.url}}"
+                        class="img-fluid" alt="Phone">
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0">{{item.product.name}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">Color: {{item.product.starp_color}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">Highlights: {{item.product.highlights}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">Qty: {{item.qty}}</p>
+                    </div>
+                    <div class="col-md-2 text-center d-flex justify-content-center align-items-center">
+                      <p class="text-muted mb-0 small">₹ {{item.subtotal}}</p>
+                    </div>
+                  </div>
+                </div>
+              </div>
+              {% endfor %}
+
+              <div class="d-flex justify-content-between pt-2">
+                <p class="fw-bold mb-0">Order Details</p>
+                <p class="text-muted mb-0"><span class="fw-bold me-4">Total</span> ₹{{order.total_amount}}</p>
+              </div>
+
+              <div class="d-flex justify-content-between pt-2">
+                <p class="text-muted mb-0">Invoice Number : 788152</p>
+              </div>
+
+              <div class="d-flex justify-content-between">
+                <p class="text-muted mb-0">Invoice Date : {{order.time}}</p>
+                <p class="text-muted mb-0"><a href="{% url 'web:invoice' order_id=order.order_id %}">Print invoice</a></p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock content %}

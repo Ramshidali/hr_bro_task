@@ -1,0 +1,244 @@
+{% extends "base.html" %}
+{% load i18n %}
+{% load static %}
+{% load users_template_tags %}
+{% load tz %}
+{% block content %}
+    <section id="content">
+      <div class="container">
+            <div class="row wrapper white-bg p-h-xs">
+                <div class="col-lg-12">
+                    <div class="col-lg-7">
+                        <h3 style="color: #fff;">{{title}}</h3>
+                    </div>
+                </div>
+            </div>
+
+    <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="row">
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Basic Details </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Time</h4>
+                                <p>{{instance.date_added|timezone:user_time_zone}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Amount</h4>
+                                <p>{{instance.amount|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Currency</h4>
+                                <p>{{instance.currency|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Order Id</h4>
+                                <p style="color:#a30707f7">{{instance.order_id|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Order Status</h4>
+                                <p style="color:#a30707f7">{{instance.order_status|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Transaction ID</h4>
+                                <p style="color:#a30707f7">{{instance.transaction_id|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Payment ID.</h4>
+                                <p style="color:#a30707f7">{{instance.payment_order_id|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Failure Message</h4>
+                                <p>{{instance.failure_message|default:"-"}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- div.col-lg-6 -->
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Basic Details </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Language</h4>
+                                <p>{{instance.language|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Order Status</h4>
+                                <p>{{instance.order_status|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Payment Mode</h4>
+                                <p>{{instance.payment_mode|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Payment Type</h4>
+                                <p>{{instance.payment_type|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Card Name</h4>
+                                <p>{{instance.card_name|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Status Code</h4>
+                                <p>{{instance.status_code|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Status Message</h4>
+                                <p>{{instance.status_message|default:"-"}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- div.col-lg-6 -->
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Delivery Info </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery Name</h4>
+                                <p>{{instance.delivery_name|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery Address</h4>
+                                <p>{{instance.delivery_address|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery City</h4>
+                                <p>{{instance.delivery_city|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery zip</h4>
+                                <p>{{instance.delivery_zip|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery Country</h4>
+                                <p>{{instance.delivery_country|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery Phone</h4>
+                                <p>{{instance.delivery_tel|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Delivery Email</h4>
+                                <p>{{instance.delivery_email|default:"-"}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- div.col-lg-6 -->
+
+            <div class="col-lg-6">
+                <div class="ibox float-e-margins">
+                    <div class="ibox-title">
+                        <h5>Billing Info </h5>
+                    </div>
+                    <div class="ibox-content">
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing Nam</h4>
+                                <p>{{instance.delivery_name|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing Address</h4>
+                                <p>{{instance.billing_name|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing City</h4>
+                                <p>{{instance.billing_city|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing zip</h4>
+                                <p>{{instance.billing_zip|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing Country</h4>
+                                <p>{{instance.billing_country|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing Phone</h4>
+                                <p>{{instance.billing_tel|default:"-"}}</p>
+                            </div>
+                        </div>
+                        <div class="m-b-md">
+                            <div class="media-body">
+                                <h4>Billing Email</h4>
+                                <p>{{instance.billing_email|default:"-"}}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+            </div><!-- div.col-lg-6 -->
+        </div> <!-- div.row -->
+    </div><!-- div.wrapper -->
+</section>
+{% endblock %}
+
+
+{% block static %}
+    {% load static %}
+{% endblock %}

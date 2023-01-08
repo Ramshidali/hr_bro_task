@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    {% load static %}
+    <link href="{% static 'admin_panel/assets/css/bootstrap.min.css' %}" rel="stylesheet" type="text/css" />
+    <title>Invoice</title>
+</head>
+<body onload="window.print()">
+    <section id='content' class="content">
+        <section class="wrapper">
+            <div class="head">
+                <div class="top">
+                    <div class="left">
+                        <h4>INVOICE</h4>
+                    </div>
+                    <div class="right">
+                        <h4>{{order.order_id}}</h4>
+                        <h4>{{order.time}}</h4>
+                        <h4>{{order.total_amount}}</h4>
+                    </div>
+                </div>
+                <div class="bottom">
+                    <div class="left">
+                        <img src="" alt="logo-small" class="logo-sm" style="height: 60px;">
+                        <h4>Company Name</h4>
+                    </div>
+                    <div class="right">
+                        <h5>Company address</h5>
+                        <h5>bluebelluniforms@gmail.com</h5>
+                        <h5>7560888864</h5>
+                    </div>
+                </div>
+                <hr class="line">
+            </div>
+            <div class="details">
+                <div class="left">
+                    <h4>Shipping Details</h4>
+                    <div class="item">
+                        <h5>Order ID: {{order.order_id}}</h5>
+                        <h5>{{order.customer}}</h5>
+                        <h5>{{order.order.billing_address.phone}}</h5>
+                    </div>
+                </div>
+                <div class="right">
+                    <h4>Billing Details</h4>
+                    <div class="item">
+                        <h5>{{order.billing_address.name}}, {{order.billing_phone}}</h5>
+                        <h5>{{order.billing_address.address}}, {{order.billing_address.locality}},</h5>
+                        <h5>{{order.billing_address.pincode}}, {{order.billing_address.city}}, {{order.billing_address.state}}</h5>
+                    </div>
+                </div>
+            </div>
+            <div>
+                <table  class="table table-bordered">
+                    <tr>
+                        <th scope="col">#</th>
+                        <th scope="col" >Brand</th>
+                        <th scope="col" >Product Name</th>
+                        <th scope="col">Starp Color</th>
+                        <th scope="col">Qty</th>
+                        <th scope="col">Price</th>
+                        <th scope="col" colspan="2" class="text-center" style="width: 300px;">Sub Total</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for instance in order_items %}
+                    <tr>
+                        <td>{{forloop.counter}}</td>
+                        <td>{{instance.product.brand.name}}</td>
+                        <td>{{instance.product.name}}</td>
+                        <td>{{instance.product.starp_color}}</td>
+                        <td>{{instance.qty}}</td>
+                        <td>{{instance.product.price}}</td>
+                        <td>{{instance.subtotal}}</td>
+                    </tr>
+                    {% endfor %}
+                    <tr>
+                        <td colspan="5" rowspan="2" class="text-center">Total Invoice Amount In Words</td>
+                        <td>Sub Total </td>
+                        <td>{{order.total_amount}}</td>
+                    </tr>
+                    <tr>
+                        {% comment %} <td colspan="5" class="text-center font-weight-bold">Two Thousand Forty Eight Rupees Only</td> {% endcomment %}
+                        <td>Total</td>
+                        <td class="font-weight-bold">{{order.total_amount}}</td>
+                    </tr>
+                    <tr>
+                        <td colspan="5" >
+                            <h4 class="text-center">Declaration</h4>
+                            <p class="text-left">Certified that all the particulars shown in the above invoice are correct in all respects and the goods on which the
+                                tax charges and collected are in accordance with the provisions of the GST Act-2017 and the rules made there
+                                under. It is also certified that my/our Registration under GST Act-2017 is not subject to any
+                                suspension/cancellation and it is valid as on the date of the bill.</p></td>
+                        <td colspan="2" class="align-bottom">Autorized Signatory</td>
+                    </tr>
+                </tbody>
+                </table>
+            </div>
+        </section>
+    </section>
+
+    <style>
+
+        h4{
+            font-size: 14px;
+        }
+        h5,p{
+            font-size: 12px;
+            font-weight: 400;
+        }
+        .wrapper{
+            width: 95%;
+            margin: 0 auto;
+            max-width: 1200px;
+            color: #303e67 !important;
+        }
+        .head{
+            padding:10;
+        }
+        .head .top{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: #aaaaaa;
+            padding:0 10px;
+            margin-bottom: 10px;
+        }
+        .head .top .left{
+            width:50%;
+        }
+        .head .top .right{
+            width:50%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .head .top h4{
+            font-weight: 400;
+        }
+        .head .bottom{
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .head .bottom .left{
+            width:50%;
+            display: flex;
+            justify-content: flex-start;
+            align-items: center;
+        }
+        .head .bottom .left h4{
+            margin-left: 30px;
+            font-weight: bold;
+        }
+        .head .bottom .right{
+            width: 50%;
+        }
+        .head .bottom .right h5{
+            text-align: left;
+            font-weight: 400;
+        }
+
+        .details{
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        .details .left{
+            width: 50%;
+        }
+        .details .right{
+            width: 50%;
+        }
+        .details h3{
+            font-weight: normal;
+        }
+    </style>
+</body>
+</html>

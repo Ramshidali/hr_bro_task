@@ -1,0 +1,96 @@
+{% extends 'admin_panel/base.html' %}
+{% load static %}
+
+{% block content %}
+    <!-- Page Content-->
+    <div class="page-content">
+        <div class="container-fluid">
+            <!-- Page-Title -->
+            <div class="row">
+                <div class="col-sm-12">
+                    <div class="page-title-box">
+                        <div class="row">
+                            <div class="col">
+                                <h4 class="page-title">Brand List</h4>
+                                <ol class="breadcrumb">
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Dashboard</a></li>
+                                    <li class="breadcrumb-item"><a href="javascript:void(0);">Brands</a></li>
+                                    <li class="breadcrumb-item active">List</li>
+                                </ol>
+                            </div><!--end col-->
+                            <div class="col-auto col-sm-2 float-right ml-auto">
+                                <form method="get" action="{% url 'product:brand' %}">
+                                    <li class="list-inline-item">
+                                        <div class="input-group">
+
+                                            <input name="q" type="text" placeholder="Search" value="{{ filter_data.q }}"
+                                                class="form-control" />
+                                            <span class="input-group-append">
+                                                <button type="button" class="btn btn-soft-primary btn-sm"><i
+                                                        class="fas fa-search"></i></button>
+                                            </span>
+                                        </div>
+                                    </li>
+                                </form>
+                            </div>
+                            <div class="col-auto align-self-center">
+                                <a class="btn btn-primary btn-sm text-white px-4 d-inline-block"  href="{% url 'product:create_brand' %}" ><i class="mdi mdi-plus mr-2"></i>Brand</a>
+                            </div><!--end col-->
+                        </div><!--end row-->
+                    </div><!--end page-title-box-->
+                </div><!--end col-->
+            </div><!--end row-->
+            <!-- end page title end breadcrumb -->
+            <div class="row">
+                <div class="col-12">
+                    <div class="table-responsive">
+                        <table id="datatable" class="table table-bordered dt-responsive nowrap" style="border-collapse: collapse; border-spacing: 0; width: 100%;">
+                            <thead>
+                            <tr>
+                                <th style="width:2%">SL.No</th>
+                                <th style="width:85%">Name</th>
+                                <th>Action</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            {% load el_pagination_tags %}
+                            {% paginate 20 instances %}
+                            {%for brand in instances%}
+                            <tr>
+                                <td>{{forloop.counter}}</td>
+                                <td>{{brand.name}}</td>
+
+                                <td>
+                                    <a href="{% url 'product:product_details' pk=product.pk %}" class="mr-2"><i class="las la-eye text-info font-18"></i></a>
+                                    <a href="{% url 'product:edit_product' pk=product.pk %}" class="mr-2"><i class="las la-pen text-info font-18"></i></a>
+                                    <a data-id="{{ product.pk }}" class="action-button remove redirect" href="{% url 'product:delete_product' pk=product.pk %}" data-text="{{ confirm_delete_message }}" data-title="Are you sure?"><i class="las la-trash-alt text-danger font-18"></i></a>
+                                </td>
+                            </tr>
+                            {%endfor%}
+                            {% comment %} {% show_pages %} {% endcomment %}
+
+                            </tbody>
+                        </table>
+
+                        {% get_pages %}
+                        <div class="clearfix"></div>
+                        <div class="row pagi my-3">
+                            <div class="col-sm-6 col-xs-6 text-left my-pagina">{% show_pages %}</div>
+                            <div class="col-sm-6 col-xs-6 text-right tot my-pagination align-items-center">
+                                <div class="m-t-10">
+                                    Showing {{title}}
+                                    <span class="current_page_index">{{ pages.current_start_index }}</span> - <span
+                                        class="current_end_status">{{ pages.current_end_index }}</span> of <span
+                                        class="total_count">{{ pages.total_count }}</span>
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                </div> <!-- end col -->
+            </div> <!-- end row -->
+
+        </div><!-- container -->
+    </div>
+    <!-- end page content -->
+{% endblock content %}

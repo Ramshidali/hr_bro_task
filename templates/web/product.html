@@ -1,0 +1,147 @@
+{% extends 'web/base.html' %}
+{% load static %}
+{% load web_templatetag %}
+
+{% block content %}
+
+<div class="super_container">
+    <header class="header" style="display: none;">
+        <div class="header_main">
+            <div class="container">
+                <div class="row">
+                    <div class="col-lg-6 col-12 order-lg-2 order-3 text-lg-left text-right">
+                        <div class="header_search">
+                            <div class="header_search_content">
+                                <div class="header_search_form_container">
+                                    <form action="#" class="header_search_form clearfix">
+                                        <div class="custom_dropdown">
+                                            <div class="custom_dropdown_list"> <span class="custom_dropdown_placeholder clc">All Categories</span> <i class="fa fa-chevron-down"></i>
+                                                <ul class="custom_list clc">
+                                                    <li><a class="clc" href="#">All Categories</a></li>
+                                                </ul>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </header>
+    <div class="single_product">
+        <div class="container-fluid" style=" background-color: #fff; padding: 11px;">
+            <div class="row">
+                <div class="col-lg-2 order-lg-1 order-2">
+
+                </div>
+                <div class="col-lg-4 order-lg-2 order-1">
+                    <div class="image_selected"><img src="{{instance.image.url}}" alt=""></div>
+                </div>
+                <div class="col-lg-6 order-3">
+                    <div class="product_description">
+                        <nav>
+                            <ol class="breadcrumb">
+                                <li class="breadcrumb-item"><a href="#">Home</a></li>
+                                <li class="breadcrumb-item"><a href="#">Products</a></li>
+                                <li class="breadcrumb-item active">Accessories</li>
+                            </ol>
+                        </nav>
+                        <div class="product_name">{{instance.name}}</div>
+                        <div> <span class="product_price">₹ {{instance.price}}</span></div>
+                        <hr class="singleline">
+                        <div>
+                            <span class="product_info">Strap Color: {{instance.starp_color}}</span><br>
+                            <span class="product_info">Highlights: {{instance.highlights}}</span><br>
+                            <span class="product_info" style="color:red">
+
+                                {% if not instance.status %}
+                                Out of Stock
+                                {% endif %}
+
+                            </span><br>
+                        </div>
+
+                        {% get_have_cart instance.pk request.user as have_cart %}
+                        <div class="row">
+                            <div class="col-xs-6" style="margin-left: 13px;">
+                                <div class="product_quantity"> <span>QTY: </span> <input id="number" type="text" pattern="[0-9]*" value="{% if have_cart.status %}{{have_cart.qty}}{% else %}1{% endif %}" id="counting">
+                                    <div class="quantity_buttons">
+                                        <div id="increase" class="quantity_inc quantity_control" onclick="increaseValue('{{instance.stock}}')" value="Increase Value"><i class="fa fa-chevron-up"></i></div>
+                                        <div id="decrease" class="quantity_dec quantity_control" onclick="decreaseValue()" value="Decrease Value"><i class="fa fa-chevron-down"></i></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-xs-6">
+                            {% if have_cart.status %}
+                            <a href="{% url 'web:cart' %}"><button type="button" class="btn btn-success shop-button">Goto Cart</button></a>
+                            {% else %}
+                            <button type="submit" id="submit" class="btn btn-primary shop-button btn btn-soft-primary btn-sm waves-effect waves-light" onclick="getQtyValue()">Add to Cart</button>
+                            {% endif %}
+                                <div class="product_fav"><i class="fa fa-heart"></i></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+<script>
+    function increaseValue(stock) {
+        var value = parseInt(document.getElementById('number').value, 10);
+        if (document.getElementById('number').value!=stock) {
+            value = isNaN(value) ? 0 : value;
+            value++;
+            document.getElementById('number').value = value;
+        }
+      }
+
+      function decreaseValue() {
+        var value = parseInt(document.getElementById('number').value, 10);
+        value = isNaN(value) ? 0 : value;
+        value < 1 ? value = 1 : '';
+        value--;
+        document.getElementById('number').value = value;
+      }
+
+      function getQtyValue(url){
+        val = $("#number").val();
+        console.log(val)
+        url = "/web/add-cart/{{instance.pk}}/"+val+"/";
+        console.log(url)
+
+        $.ajax({
+			type: "GET",
+			url: url,
+			dataType: "json",
+			data: {},
+
+			success: function (data) {
+				if (data["status"] == "true") {
+
+                    swal({
+                        type: 'success',
+                        title: data['title'],
+                        text: data['message'],
+                      }, function () {
+                        window.location = data['redirect_url'];
+                    });
+				}
+			},
+
+			error: function (data) {
+				//    console.log("errrorrrr")
+			},
+		});
+    }
+</script>
+{% endblock content %}
+
+{% block static %}
+    {% load static %}
+
+{%endblock%}
