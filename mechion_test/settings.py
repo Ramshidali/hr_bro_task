@@ -20,6 +20,7 @@ INSTALLED_APPS = [
     'registration',
     'el_pagination',
     'versatileimagefield',
+    'rest_framework',
 
     'django.contrib.admin',
     'django.contrib.auth',

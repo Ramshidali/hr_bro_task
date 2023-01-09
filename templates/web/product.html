@@ -108,11 +108,9 @@
         document.getElementById('number').value = value;
       }
 
-      function getQtyValue(url){
+      function getQtyValue(){
         val = $("#number").val();
-        console.log(val)
         url = "/web/add-cart/{{instance.pk}}/"+val+"/";
-        console.log(url)
 
         $.ajax({
 			type: "GET",
@@ -121,6 +119,7 @@
 			data: {},
 
 			success: function (data) {
+                console.log(data['redirect_url']+"ulllskjvnjfdnrvjr j======")
 				if (data["status"] == "true") {
 
                     swal({
@@ -128,7 +127,7 @@
                         title: data['title'],
                         text: data['message'],
                       }, function () {
-                        window.location = data['redirect_url'];
+                        window.location.href = data['redirect_url']+"?pk={{instance.pk}}";
                     });
 				}
 			},
@@ -139,9 +138,12 @@
 		});
     }
 </script>
+
 {% endblock content %}
 
 {% block static %}
     {% load static %}
+
+
 
 {%endblock%}

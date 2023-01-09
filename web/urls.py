@@ -6,7 +6,8 @@ app_name = 'web'
 
 urlpatterns = [
     path('', views.home, name='home'),
-    re_path(r'^product/(?P<pk>.*)/$', views.product_view, name='product_view'),
+    re_path(r'^home_product/$', views.home_products, name='home_products'),
+    re_path(r'^product/$', views.product_view, name='product_view'),
 
     re_path(r'^add-cart/(?P<pk>.*)/(?P<qty>.*)/$', views.add_cart, name='add_cart'),
     re_path(r'^remove-from-cart/(?P<pk>.*)/$', views.remove_from_cart, name='remove_from_cart'),

@@ -27,6 +27,7 @@ from order.models import Order, OrderItem
 from payment.models import Payment
 from product.models import Product
 from web.forms import CustomerAddressForm
+from web.serializers import ProductSerializer
 
 client = razorpay.Client(auth=(RZP_ID_KEY, RZP_SECRET_KEY))
 
@@ -71,11 +72,8 @@ def customer_logout(request):
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
 def home(request):
-    print(request.user.email)
-    instances = Product.objects.filter(is_deleted=False,status=True)
 
     context = {
-        "instances" : instances,
         'page_name' : 'home',
     }
 
@@ -83,7 +81,22 @@ def home(request):
 
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
-def product_view(request,pk):
+def home_products(request):
+    instances = Product.objects.filter(is_deleted=False,status=True)[:5]
+    serialized = ProductSerializer(instances, many=True, context={"request": request})
+
+    response_data = {
+        "StatusCode": 6000,
+        "status" : "true",
+        "data" : serialized.data,
+    }
+
+    return HttpResponse(json.dumps(response_data), content_type='application/javascript')
+
+
+@login_required(login_url=CUSTOMER_LOGIN_URL)
+def product_view(request):
+    pk = request.GET.get("pk")
     print(request.user.email)
     instance = Product.objects.get(pk=pk,is_deleted=False,status=True)
 
@@ -110,6 +123,7 @@ def cart(request):
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
 def add_cart(request,pk,qty):
+
     print(request.user.email)
     print(pk,qty)
     customer = Customer.objects.get(user=request.user,is_deleted=False)
@@ -145,7 +159,7 @@ def add_cart(request,pk,qty):
         "title": "Successfully Added",
         "message": "Successfully Added to Cart.",
         'redirect': 'true',
-        "redirect_url": reverse("web:product_view", kwargs={'pk':pk})
+        "redirect_url": reverse("web:product_view")
     }
 
     return HttpResponse(json.dumps(response_data), content_type='application/javascript')
@@ -178,8 +192,7 @@ def remove_from_cart(request,pk):
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
 def increment_cart(request,pk):
-    response_data = {}
-    today = datetime.today()
+    print("incremnts")
 
     if CartItem.objects.filter(pk=pk).exists():
         instance = CartItem.objects.get(pk=pk)
@@ -208,8 +221,7 @@ def increment_cart(request,pk):
 
 @login_required(login_url=CUSTOMER_LOGIN_URL)
 def decrement_cart(request,pk):
-    response_data = {}
-    today = datetime.today()
+    print("decrement")
 
     if CartItem.objects.filter(pk=pk).exists():
         instance = CartItem.objects.get(pk=pk)
