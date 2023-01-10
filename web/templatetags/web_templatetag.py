@@ -1,5 +1,6 @@
 from django import template
 from customer.models import Customer, CartItem
+from product.models import Product
 
 
 register = template.Library()
@@ -15,3 +16,12 @@ def get_have_cart(product, user):
         'status' : status,
         'qty' : qty,
         }
+
+
+@register.simple_tag
+def get_have_stock(product):
+    status = False
+    if Product.objects.filter(pk=product).exists():
+        if not Product.objects.get(pk=product).stock==0 :
+            status = True
+    return status

@@ -15,22 +15,7 @@
         </div>
         <div class="row" id="products">
             <!-- Single Product -->
-            {% for instance in instances %}
-            <div class="col-md-6 col-lg-4 col-xl-3" onclick="window.location.href='{% url 'web:product_view' pk=instance.pk %}'">
-                <div id="product-1" class="single-product">
-                    <div class="part-1" style="background: url({{instance.image.url}}) no-repeat center;)">
-                        <ul>
-                            <li><a href="#"><i class="fa fa-shopping-cart"></i></a></li>
-                            <li><a href="#"><i class="fa fa-heart"></i></a></li>
-                        </ul>
-                    </div>
-                    <div class="part-2">
-                        <h3 class="product-title">{{instance.name}}</h3>
-                        <h4 class="product-price">Rs: {{instance.price}}</h4>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
+
         </div>
     </div>
 </section>

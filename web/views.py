@@ -300,7 +300,8 @@ def add_address(request):
 def create_order(request):
 
     customer = Customer.objects.get(user=request.user,is_deleted=False)
-    cart_instance =  CartItem.objects.filter(customer=customer,is_deleted=False)
+    cart_instance =  CartItem.objects.filter(customer=customer,is_deleted=False).exclude(product__stock=0)
+
 
     order_auto_id = get_auto_id(Order)
     count_len = len(str(order_auto_id))
@@ -331,7 +332,7 @@ def create_order(request):
 
     order_id = "OR" + str(today.year) + month_number + date_number + number
 
-    total_amount = CartItem.objects.filter(customer__user=request.user,is_deleted=False).aggregate(total_price=Sum('unit_price'))["total_price"]
+    total_amount = CartItem.objects.filter(customer__user=request.user,is_deleted=False).exclude(product__stock=0).aggregate(total_price=Sum('unit_price'))["total_price"]
 
     if CustomerAddress.objects.filter(customer__user=request.user).exists():
         address = CustomerAddress.objects.filter(is_deleted=False).order_by('-id').first()
@@ -474,7 +475,7 @@ def payment_response(request,order_id):
         if Customer.objects.filter(user=request.user,is_deleted=False).exists():
             customer = Customer.objects.get(user=request.user,is_deleted=False)
             # print(customer,"---------user------------")
-            items = CartItem.objects.filter(customer__user=customer.user,is_deleted=False)
+            items = CartItem.objects.filter(customer__user=customer.user,is_deleted=False).exclude(product__stock=0)
             # print(items,"------------items----------")
         order.payment_status = "received"
         order.save()
@@ -496,7 +497,7 @@ def payment_response(request,order_id):
                 # item.is_deleted = True
                 # item.save()
                 # delete item from cart
-                CartItem.objects.filter(pk=item.pk,is_deleted=False).delete()
+                CartItem.objects.filter(pk=item.pk,is_deleted=False).exclude(product__stock=0).delete()
 
         success = "yes"
         message = "Success! Your transaction has been successfully processed."

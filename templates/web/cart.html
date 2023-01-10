@@ -1,5 +1,6 @@
 {% extends 'web/base.html' %}
 {% load static %}
+{% load web_templatetag %}
 
 
 {% block content %}
@@ -26,11 +27,21 @@
                 <p><span class="text-muted">Brand: </span>{{instance.product.brand.name}}</p>
                 <p><span class="text-muted">Color: </span>{{instance.product.starp_color}}</p>
               </div>
+              {% get_have_stock instance.product.pk as have_stock %}
+              {% if have_stock %}
               <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
                 <a href="{% url 'web:decrement_cart' pk=instance.pk %}" class="btn btn-link px-2"><i class="fa fa-minus"></i></a>
                 <input id="form1 number{{instance.pk}}" min="0" name="quantity" value="{{instance.qty}}" type="number" class="form-control form-control-sm" disabled/>
                 <a href="{% url 'web:increment_cart' pk=instance.pk %}" class="btn btn-link px-2"><i class="fa fa-plus"></i></a>
               </div>
+              {% else %}
+              <div class="col-md-3 col-lg-3 col-xl-2 d-flex">
+                <p style="color:red">Out of Stock</p>
+              </div>
+              {% endif %}
+
+
+
               <div class="col-md-3 col-lg-2 col-xl-2 offset-lg-1">
                 <h5 class="mb-0">₹{{instance.unit_price}}</h5>
               </div>

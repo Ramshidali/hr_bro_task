@@ -65,14 +65,22 @@
 
                         {% get_have_cart instance.pk request.user as have_cart %}
                         <div class="row">
+
                             <div class="col-xs-6" style="margin-left: 13px;">
+                                {% get_have_stock instance.pk as have_stock %}
+
+                                {% if have_stock %}
                                 <div class="product_quantity"> <span>QTY: </span> <input id="number" type="text" pattern="[0-9]*" value="{% if have_cart.status %}{{have_cart.qty}}{% else %}1{% endif %}" id="counting">
                                     <div class="quantity_buttons">
                                         <div id="increase" class="quantity_inc quantity_control" onclick="increaseValue('{{instance.stock}}')" value="Increase Value"><i class="fa fa-chevron-up"></i></div>
                                         <div id="decrease" class="quantity_dec quantity_control" onclick="decreaseValue()" value="Decrease Value"><i class="fa fa-chevron-down"></i></div>
                                     </div>
                                 </div>
+                                {% else %}
+                                <p style="color:red">Out of Stock</p>
+                                {% endif %}
                             </div>
+
                             <div class="col-xs-6">
                             {% if have_cart.status %}
                             <a href="{% url 'web:cart' %}"><button type="button" class="btn btn-success shop-button">Goto Cart</button></a>
